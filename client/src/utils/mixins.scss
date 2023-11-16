@@ -1,0 +1,89 @@
+@mixin flex_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin error {
+  color: var(--error);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+@mixin button {
+  width: 100%;
+  padding: 12px 40px;
+  border-radius: 100px;
+  background: var(--accent-primary);
+  color: var(--white);
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  transition: 0.3s;
+
+  &:hover, &_active {
+    transition: 0.3s;
+    background: var(--accent-primary);
+    opacity: 0.95;
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    transition: 0.3s;
+    background: var(--accent-primary);
+    opacity: 0.8;
+    cursor: auto;
+    transform: none;
+  }
+}
+
+@mixin input {
+  padding: 8px 12px;
+  height: 44px;
+  border: 1px solid var(--border-light);
+  background: var(--white);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+  color: var(--gray-color-text);
+}
+
+@mixin label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--dark-blue-label);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+}
+
+@mixin form {
+  width: 100%;
+  padding: 32px 40px;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px -2px rgba(16, 24, 40, 0.06), 0 4px 8px -2px rgba(16, 24, 40, 0.10);
+  @include flex_center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@mixin form_block_error {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+@mixin main_title {
+  color: var(--dark-blue-label);
+  font-family: Inter, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px; /* 133.333% */
+  letter-spacing: -0.464px;
+}

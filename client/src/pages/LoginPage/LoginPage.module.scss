@@ -1,0 +1,46 @@
+@import "../../utils/reset";
+@import "../../utils/mixins";
+
+.loginPage_wrapper {
+  background: rgba(214, 214, 214, 0.3);
+  @include flex_center;
+  min-width: 100vw;
+  min-height: 100vh;
+
+  &_login {
+    min-width: 440px;
+    @include flex_center;
+    flex-direction: column;
+    gap: 32px;
+
+    &_title {
+      .title {
+        @include main_title;
+      }
+    }
+
+    &_form {
+      @include form;
+
+      &_block {
+        @include form_block_error;
+
+        .error {
+          @include error;
+        }
+
+        & > label {
+          @include label;
+        }
+
+        .input {
+          @include input;
+        }
+      }
+
+      &_button {
+        @include button;
+      }
+    }
+  }
+}
