@@ -1,18 +1,26 @@
 import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
+import {useNavigate} from "react-router-dom";
 
 import styles from './LoginPage.module.scss';
 import {authService} from "../../services/auth.service";
 import {loginValidator} from "../../validators/login.validator";
 import {getHttpErrorMessageByStatus} from "../../assets/getHttpErrorMessageByStatus";
+import {MAIN_ROUTES} from "../../routing/mainRoutes";
 
 const LoginPage = () => {
     const [error, setError] = useState(null);
 
+    const navigate = useNavigate();
+
     const handleLogin = async (data) => {
         try {
-            await authService.login(data);
+            const {data: resData} = await authService.login(data);
+
+            navigate(MAIN_ROUTES.MAIN)
+
+            localStorage.setItem("token", JSON.stringify(resData));
         }
         catch (error) {
             const errorMessage = getHttpErrorMessageByStatus(error);

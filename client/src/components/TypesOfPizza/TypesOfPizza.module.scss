@@ -1,0 +1,26 @@
+@import "../../utils/reset";
+@import "../../utils/mixins";
+
+.types {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  & > li {
+    padding: 10px 15px;
+    border-radius: 30px;
+    color: var(--accent-primary);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.24px;
+    transition: 0.3s;
+
+    &.active {
+      transition: 0.3s;
+      background: var(--accent-primary);
+      color: var(--white);
+    }
+  }
+}

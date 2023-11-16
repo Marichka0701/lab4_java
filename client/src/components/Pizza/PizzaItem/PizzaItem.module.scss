@@ -1,0 +1,103 @@
+@import "../../../utils/mixins";
+@import "../../../utils/reset";
+
+.pizza {
+  max-width: 300px;
+  @include flex_center;
+  flex-direction: column;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    transition: 0.3s;
+    transform: scale(0.95);
+  }
+
+  &_icon {
+    & > img {
+      width: 250px;
+      height: 250px;
+    }
+  }
+
+  &_info {
+    @include flex_center;
+    flex-direction: column;
+    gap: 24px;
+
+    & > h3 {
+      color: var(--gray-color-text);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    &_additional {
+      background: var(--accent-primary);
+      border-radius: 10px;
+      padding: 8px;
+      @include flex_center;
+      flex-direction: column;
+      gap: 8px;
+
+      &_type, &_size {
+        display: flex;
+        gap: 4px;
+
+        & > li {
+          padding: 10px 20px;
+          border-radius: 5px;
+          background: transparent;
+          color: var(--white);
+          font-family: Inter, sans-serif;
+          font-size: 14px;
+          font-weight: 800;
+          transition: 0.3s;
+
+          &.active {
+            color: var(--gray-color-text);
+            background: var(--white);
+            border-radius: 5px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+            transition: 0.3s;
+          }
+        }
+      }
+    }
+
+    &_priceContainer {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &_price {
+        text-align: center;
+        color: var(--gray-color-text);
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+
+      &_add {
+        padding: 12px 24px;
+        border-radius: 100px;
+        background: var(--white);
+        color: var(--accent-primary);
+        border: 3px solid var(--accent-primary);
+        font-family: Inter, sans-serif;
+        font-size: 14px;
+        font-weight: 800;
+        transition: 0.3s;
+
+        &:hover, &_active {
+          transition: 0.3s;
+          background: var(--accent-primary);
+          color: var(--white);
+          opacity: 0.95;
+          transform: scale(0.95);
+        }
+      }
+    }
+  }
+}
