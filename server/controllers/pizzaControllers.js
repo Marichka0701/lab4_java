@@ -1,4 +1,7 @@
+const mongoose = require('mongoose');
+
 const { Pizza } = require('../models/Pizza');
+const { User } = require('../models/User');
 const { sendEmail } = require('../utils/sendEmail');
 
 const orderPizza = async (req, res) => {
@@ -27,16 +30,26 @@ const orderPizza = async (req, res) => {
 
 const acceptPizzaByAdmin = async (req, res) => {
     try {
-        const pizza = await Pizza.findByIdAndUpdate(req.params.id, { acceptedByAdmin: true });
-        res.status(200).json({ message: 'Pizza accepted successfully', pizza });
+        const isValidPizzaId = mongoose.Types.ObjectId.isValid(req.params.id);
+        if (!isValidPizzaId) {
+            return res.status(400).json({ message: 'Invalid Pizza Id' });
+        }
 
+        const pizza = await Pizza.findById(req.params.id).populate('user');
+        if (!pizza) {
+            return res.status(404).json({ message: 'Pizza not found' });
+        }
+
+        const updatedPizza = await Pizza.findByIdAndUpdate(req.params.id, { acceptedByAdmin: true }, { new: true });
         await sendEmail({
             email: pizza.user?.email,
             subject: "Pizza Accepted",
             message: "Your pizza has been accepted by admin",
         });
+
+        res.status(200).json({ message: 'Pizza accepted successfully', updatedPizza });
     } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -61,6 +74,7 @@ const getPizzas = async (req, res) => {
 const getPizza = async (req, res) => {
     try {
         const pizza = await Pizza.findById(req.params.id);
+        if (!pizza) return res.status(404).json({ pizza: null });
         res.status(200).json({ pizza });
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' });

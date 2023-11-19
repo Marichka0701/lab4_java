@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const { orderPizza, acceptPizzaByAdmin, deliverPizzaByCourier, getPizzas, getPizza, getPizzasByUser, getPizzasByAdmin } = require("../controllers/pizzaControllers");
 
-router.get("/", getPizzas); // для головної сторінки
+router.get("/", getPizzas); // для головної сторінки 
 router.get("/user", getPizzasByUser); // особистий кабінет простого користувача
 router.get("/admin", getPizzasByAdmin); // особистий кабінет адміністратора
 router.get("/:id", getPizza); // отримати інфу про піцу по id
