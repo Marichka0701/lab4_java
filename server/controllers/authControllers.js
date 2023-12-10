@@ -29,7 +29,7 @@ const register = async (req, res) => {
         
         res.status(201).json({ message: "User created successfully" });
     } catch (error) {
-        res.status(500).json({ message: "Internal Server Error" });
+        res.status(500).json({ message: error.message });
     }
 }
 
@@ -56,5 +56,6 @@ const login = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
+
 
 module.exports = { register, login };
