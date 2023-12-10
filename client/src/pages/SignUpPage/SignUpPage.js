@@ -1,18 +1,24 @@
 import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
+import {useNavigate} from "react-router-dom";
 
 import styles from './SignUpPage.module.scss';
 import {authService} from "../../services/auth.service";
 import {registrationValidator} from "../../validators/registration.validator";
 import {getHttpErrorMessageByStatus} from "../../assets/getHttpErrorMessageByStatus";
+import {MAIN_ROUTES} from "../../routing/mainRoutes";
 
 const SignUpPage = () => {
     const [error, setError] = useState(null);
 
+    const navigate = useNavigate();
+
     const handleSignUp = async (data) => {
         try {
-            await authService.signUp(data);
+           await authService.signUp(data);
+           alert('You have successfully registered');
+           navigate(MAIN_ROUTES.LOGIN);
         } catch (error) {
             const errorMessage = getHttpErrorMessageByStatus(error);
             setError(errorMessage);

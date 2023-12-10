@@ -2,25 +2,34 @@ import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {useNavigate} from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
+import {useDispatch} from "react-redux";
 
 import styles from './LoginPage.module.scss';
 import {authService} from "../../services/auth.service";
 import {loginValidator} from "../../validators/login.validator";
 import {getHttpErrorMessageByStatus} from "../../assets/getHttpErrorMessageByStatus";
 import {MAIN_ROUTES} from "../../routing/mainRoutes";
+import {userActions} from "../../store/slices/userSlice";
 
 const LoginPage = () => {
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
 
+    const dispatch = useDispatch();
+
     const handleLogin = async (data) => {
         try {
-            const {data: resData} = await authService.login(data);
+            const {data: res} = await authService.login(data);
+            localStorage.setItem("token", JSON.stringify(res.token));
 
+            // get info about user
+            const {_id} = jwtDecode(res.token);
+            await dispatch(userActions.getById({id: _id}));
+
+            alert('You have successfully logged in');
             navigate(MAIN_ROUTES.MAIN)
-
-            localStorage.setItem("token", JSON.stringify(resData));
         }
         catch (error) {
             const errorMessage = getHttpErrorMessageByStatus(error);

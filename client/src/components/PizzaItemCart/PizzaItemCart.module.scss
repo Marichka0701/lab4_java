@@ -1,0 +1,14 @@
+@import "../../utils/reset";
+@import "../../utils/mixins";
+
+.pizzaItemCart {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &_buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

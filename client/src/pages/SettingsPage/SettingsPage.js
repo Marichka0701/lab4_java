@@ -1,13 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
+import {useDispatch, useSelector} from "react-redux";
 
 import styles from './SettingsPage.module.scss';
 import cart from '../../assets/images/cart.svg';
 import {updateUserValidator} from "../../validators/updateUser.validator";
+import {userActions} from "../../store/slices/userSlice";
+import CurrentOrders from "../../components/CurrentOrders/CurrentOrders";
 
 const SettingsPage = () => {
     const [error, setError] = useState(null);
+    const [option, setOption] = useState('Корзина');
 
     const {
         register,
@@ -20,8 +24,24 @@ const SettingsPage = () => {
         mode: 'all',
     });
 
-    const handleUpdateUser = () => {
+    const dispatch = useDispatch();
+    const {user, id} = useSelector(state => state.user);
 
+    const handleUpdateUser = async (data) => {
+        await dispatch(userActions.updateById({id, data}));
+
+        alert('You have successfully updated your profile');
+    }
+
+    useEffect(() => {
+        reset({
+            first_name: user.first_name,
+            last_name: user.last_name,
+        });
+    }, [user])
+
+    const handleSelectOption = (option) => {
+        setOption(option);
     }
 
     return (
@@ -69,10 +89,30 @@ const SettingsPage = () => {
                 </form>
 
                 <div className={styles.settingsPage_wrapper_settingsPage_cart}>
-                    <div className={styles.settingsPage_wrapper_settingsPage_cart_title}>
-                        <img src={cart} alt="shopping cart"/>
-                        <h3>Корзина</h3>
+                    <div className={styles.settingsPage_wrapper_settingsPage_cart_container}>
+                        <div
+                            className={`${styles.settingsPage_wrapper_settingsPage_cart_container_title} ${option === 'Корзина' ? styles.active : ''}`}
+                            onClick={() => handleSelectOption('Корзина')}
+                        >
+                            <img src={cart} alt="shopping cart"/>
+                            <h3>Корзина</h3>
+                        </div>
+
+                        <div
+                            className={`${styles.settingsPage_wrapper_settingsPage_cart_container_title} ${option === 'Історія замовлень' ? styles.active : ''}`}
+                            onClick={() => handleSelectOption('Історія замовлень')}
+                        >
+                            Історія замовлень
+                        </div>
                     </div>
+
+                    {
+                        option === 'Корзина' && <CurrentOrders/>
+                    }
+
+                    {
+                        // option === 'Корзина' && <HistoryOrders/>
+                    }
                 </div>
             </div>
         </div>

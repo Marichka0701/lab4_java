@@ -4,7 +4,7 @@
 .settingsPage_wrapper {
   min-width: 100vw;
   min-height: 100vh;
-  padding-top: 100px;
+  padding: 100px 0;
   display: flex;
   justify-content: center;
 
@@ -52,17 +52,40 @@
 
     &_cart {
       padding-top: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 32px;
 
-      &_title {
+      &_container {
+        width: 100%;
         display: flex;
         align-items: center;
-        gap: 16px;
+        justify-content: space-between;
 
-        & > h3 {
+        &_title {
+          padding: 10px 20px;
+          border-radius: 32px;
+          display: flex;
+          align-items: center;
+          transition: 0.3s;
+          gap: 16px;
           color: #3F3F3F;
           font-size: 24px;
           font-weight: 800;
           letter-spacing: 0.2px;
+
+          &.active {
+            background: rgba(37, 99, 235, 0.2);
+            transition: 0.3s;
+          }
+
+          & > h3 {
+            color: #3F3F3F;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+          }
         }
       }
     }

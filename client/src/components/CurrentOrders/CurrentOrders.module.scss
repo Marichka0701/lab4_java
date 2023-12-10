@@ -1,0 +1,10 @@
+@import "../../utils/mixins";
+@import "../../utils/reset";
+
+.currentOrders {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}

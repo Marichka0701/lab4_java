@@ -1,60 +1,87 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
 import styles from './PizzaItem.module.scss';
-import pizza from '../../../assets/images/pizza/pepperoni.svg';
+import pizzaIcon from '../../../assets/images/pizza/pepperoni.svg';
+import {MAIN_ROUTES} from "../../../routing/mainRoutes";
+import {pizzaActions} from "../../../store/slices/pizzaSlice";
 
-const PizzaItem = () => {
-    const [pizzaType, setPizzaType] = React.useState('тонке');
-    const [pizzaSize, setPizzaSize] = React.useState('26см');
+const PizzaItem = ({pizza}) => {
+    const navigate = useNavigate();
 
-    const handleSelectPizzaType = (type) => {
-        setPizzaType(type);
+    const {customPizza} = useSelector(state => state.pizza);
+    const dispatch = useDispatch();
+
+    const {pathname} = useLocation();
+
+    const handleSelectPizzaType = (event, type) => {
+        if (pathname !== MAIN_ROUTES.MAIN && pathname !== MAIN_ROUTES.SETTINGS) {
+            event.stopPropagation();
+            dispatch(pizzaActions.setCustomPizza({...customPizza, type}));
+        }
     }
 
-    const handleSelectPizzaSize = (size) => {
-        setPizzaSize(size);
+    const handleSelectPizzaSize = (event, size) => {
+        if (pathname !== MAIN_ROUTES.MAIN && pathname !== MAIN_ROUTES.SETTINGS) {
+            event.stopPropagation();
+            dispatch(pizzaActions.setCustomPizza({...customPizza, size}));
+        }
+    }
+
+    const handleNavigateToDetailedPizzaItem = () => {
+        if (pathname === MAIN_ROUTES.MAIN) {
+            navigate(`${MAIN_ROUTES.DETAILED_INFO_PIZZA}/${pizza._id}`, {state: {pizza}});
+        }
     }
 
     return (
-        <div className={styles.pizza}>
+        <div
+            className={styles.pizza}
+            onClick={handleNavigateToDetailedPizzaItem}
+        >
             <div className={styles.pizza_icon}>
-                <img src={pizza} alt="pizza icon"/>
+                <img src={pizzaIcon} alt="pizza icon"/>
             </div>
 
             <div className={styles.pizza_info}>
-                <h3>Пепероні</h3>
+                <h3>{pizza.name}</h3>
 
                 <div className={styles.pizza_info_additional}>
                     <ul className={styles.pizza_info_additional_type}>
                         <li
-                            className={pizzaType === 'тонке' ? styles.active : null}
-                            onClick={() => handleSelectPizzaType('тонке')}
-                        >тонке</li>
+                            className={customPizza.type === 'тонке' ? styles.active : null}
+                            onClick={(event) => handleSelectPizzaType(event, 'тонке')}
+                        >тонке
+                        </li>
                         <li
-                            className={pizzaType === 'традиційне' ? styles.active : null}
-                            onClick={() => handleSelectPizzaType('традиційне')}
-                        >традиційне</li>
+                            className={customPizza.type === 'традиційне' ? styles.active : null}
+                            onClick={(event) => handleSelectPizzaType(event, 'традиційне')}
+                        >традиційне
+                        </li>
                     </ul>
 
                     <ul className={styles.pizza_info_additional_size}>
                         <li
-                            className={pizzaSize === '26см' ? styles.active : null}
-                            onClick={() => handleSelectPizzaSize('26см')}
-                        >26см</li>
+                            className={customPizza.size === '26см' ? styles.active : null}
+                            onClick={(event) => handleSelectPizzaSize(event, '26см')}
+                        >26см
+                        </li>
                         <li
-                            className={pizzaSize === '30см' ? styles.active : null}
-                            onClick={() => handleSelectPizzaSize('30см')}
-                        >30см</li>
+                            className={customPizza.size === '30см' ? styles.active : null}
+                            onClick={(event) => handleSelectPizzaSize(event, '30см')}
+                        >30см
+                        </li>
                         <li
-                            className={pizzaSize === '40см' ? styles.active : null}
-                            onClick={() => handleSelectPizzaSize('40см')}
-                        >40см</li>
+                            className={customPizza.size === '40см' ? styles.active : null}
+                            onClick={(event) => handleSelectPizzaSize(event, '40см')}
+                        >40см
+                        </li>
                     </ul>
                 </div>
 
                 <div className={styles.pizza_info_priceContainer}>
-                    <p className={styles.pizza_info_priceContainer_price}>від 199грн</p>
-                    <button className={styles.pizza_info_priceContainer_add}>У корзину</button>
+                    <p className={styles.pizza_info_priceContainer_price}>{pizza.price} $</p>
                 </div>
             </div>
         </div>

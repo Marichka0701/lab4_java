@@ -3,4 +3,5 @@ export const MAIN_ROUTES = {
     LOGIN: "/login",
     SIGN_UP: "/sign-up",
     SETTINGS: "/settings",
+    DETAILED_INFO_PIZZA: "/pizza"
 }

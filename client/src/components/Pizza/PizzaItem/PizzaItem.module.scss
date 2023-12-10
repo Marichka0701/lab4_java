@@ -67,9 +67,7 @@
 
     &_priceContainer {
       width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      @include flex_center;
 
       &_price {
         text-align: center;
@@ -77,26 +75,6 @@
         font-size: 20px;
         font-weight: 800;
         letter-spacing: 0.2px;
-      }
-
-      &_add {
-        padding: 12px 24px;
-        border-radius: 100px;
-        background: var(--white);
-        color: var(--accent-primary);
-        border: 3px solid var(--accent-primary);
-        font-family: Inter, sans-serif;
-        font-size: 14px;
-        font-weight: 800;
-        transition: 0.3s;
-
-        &:hover, &_active {
-          transition: 0.3s;
-          background: var(--accent-primary);
-          color: var(--white);
-          opacity: 0.95;
-          transform: scale(0.95);
-        }
       }
     }
   }

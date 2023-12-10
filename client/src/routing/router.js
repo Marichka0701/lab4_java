@@ -5,13 +5,14 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import MainPage from "../pages/MainPage/MainPage";
 import SettingsPage from "../pages/SettingsPage/SettingsPage";
+import DetailedPizzaItem from "../components/DetailedPizzaItem/DetailedPizzaItem";
 
 const isUser = JSON.parse(localStorage?.getItem('token'));
 
 export const router = createBrowserRouter([
     {
         index: true,
-        element: !!isUser?.token ? <Navigate to={MAIN_ROUTES.MAIN}/> : <Navigate to={MAIN_ROUTES.LOGIN}/>
+        element: isUser ? <Navigate to={MAIN_ROUTES.MAIN}/> : <Navigate to={MAIN_ROUTES.LOGIN}/>
     },
     {
         path: MAIN_ROUTES.LOGIN,
@@ -28,5 +29,9 @@ export const router = createBrowserRouter([
     {
         path: MAIN_ROUTES.SETTINGS,
         element: <SettingsPage/>,
-    }
+    },
+    {
+        path: `${MAIN_ROUTES.DETAILED_INFO_PIZZA}/:id`,
+        element: <DetailedPizzaItem/>,
+    },
 ]);
